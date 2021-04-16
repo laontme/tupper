@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Формула Таппера</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@next/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+  <link rel="stylesheet" href="css/main.css">
+</head>
+
+<body>
+  <main id="app" class="container mt-3">
+    <div class="row">
+      <div class="col">
+        <div class="accordion mb-3" id="help">
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                data-bs-target="#help-collapse">
+                Как пользоваться?
+              </button>
+            </h2>
+            <div id="help-collapse" class="accordion-collapse collapse" data-bs-parent="#help">
+              <div id="help-text" class="accordion-body">
+                <p>
+                  Чтобы отметить пиксель, нажмите левую кнопку мыши, теперь пиксель закрашен. Нажмите правую кнопку
+                  мыши, чтобы отменить закраску пикселя. Когда все желаемые пиксели будут закрашены, нажмите на кнопку
+                </p>
+                <button disabled class="btn btn-primary">
+                  <i class='bx bxs-image'></i>
+                  <i class='bx bx-right-arrow-alt'></i>
+                  <b>k</b>
+                </button>
+                <p>
+                  Она сгенерирует для Вас число <b>k</b>, которое Вы можете отправить, например, другу
+                </p>
+                <p>
+                  Если же Вам дали это число <b>k</b> или Вы нашли его в интернете, то смело вставляйте его в поле ниже
+                  и нажимайте на кнопку
+                </p>
+                <button disabled class="btn btn-primary">
+                  <b>k</b>
+                  <i class='bx bx-right-arrow-alt'></i>
+                  <i class='bx bxs-image'></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="paint" class="mb-3"></div>
+        <div class="accordion mb-3" id="real-graph">
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                data-bs-target="#real-graph-collapse">
+                На реальном графике
+              </button>
+            </h2>
+            <div id="real-graph-collapse" class="accordion-collapse collapse" data-bs-parent="#real-graph">
+              <div id="desmos" class="accordion-body"></div>
+            </div>
+          </div>
+        </div>
+        <div class="mb-3 d-flex flex-row justify-content-around">
+          <button id="img-k" class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="top"
+            data-bs-html="true" title="Из изображения в переменную <b>k</b>">
+            <i class='bx bxs-image'></i>
+            <i class='bx bx-right-arrow-alt'></i>
+            <b>k</b>
+          </button>
+          <button id="k-img" class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="top"
+            data-bs-html="true" title="Из переменной <b>k</b> в изображение">
+            <b>k</b>
+            <i class='bx bx-right-arrow-alt'></i>
+            <i class='bx bxs-image'></i>
+          </button>
+        </div>
+        <div class="form-text">Ваша переменная <code>k</code>:</div>
+        <textarea class="form-control w-100 mb-3" rows="10" id="var-k"></textarea>
+      </div>
+      <div class="col">
+        <h1 class="display-6">Формула всего <span class="text-muted">(Формула Таппера)</span></h1>
+        <p>
+          В 2001 году Джефф Таппер, разрабатывая программу GrafEq, определил интересную формулу:
+        </p>
+        <img src="img/tuppers_formula.svg" width="300px" alt="Формула Джеффа Таппера" class="mb-3">
+        <p>
+          Что в ней такого? Ну, на ее графике есть изображение ее самой
+        </p>
+        <img src="img/selfref.png" height="120px" alt="Формула Джеффа Таппера" class="mb-3">
+        <p>
+          Правда, есть одно но. Видите число <b>k</b> по оси <b>Oy</b>? Это число с 544 знаками, т.е. это даже не
+          миллиард. Очень высоко. Во вкладке <b>"На реальном графике"</b> Вы сможете увидеть рисунок только до числа
+          999999976
+          <span class="text-muted">(к слову, тут всего 9 знаков)</span>
+        </p>
+        <p>
+          Интересно, согласен, но это еще не все. На графике этого неравенства можно найти любое изображение, правда,
+          размером 106x17 и одноцветное, но это все равно завораживает
+        </p>
+        <p id="examples">
+          Вот несколько примеров рисунков:
+        </p>
+        <p>
+          <a target="_blank" href="doc/tuppers_formula_ru.pdf">Подробнее</a>
+        </p>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <p class="w-100 text-center text-muted">
+      <small>
+        With ❤ by <a href="https://laont.me">laontme</a>
+      </small>
+    </p>
+  </footer>
+
+  <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 5">
+    <div class="toast align-items-center text-white border-0" id="toast">
+      <div class="d-flex">
+        <div class="toast-body"></div>
+        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@next/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bignumber.js@latest/bignumber.min.js"></script>
+  <script src="https://www.desmos.com/api/v1.6/calculator.js?apiKey=dcb31709b452b1cf9dc26972add0fda6"></script>
+  <script src="js/tupper.js"></script>
+  <script src="js/desmos.js"></script>
+  <script src="js/examples.js"></script>
+  <script src="js/misc.js"></script>
+</body>
+
+</html>
